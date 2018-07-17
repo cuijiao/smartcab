@@ -11836,7 +11836,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># 检查你的Python版本</span>
@@ -11852,7 +11852,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Import the visualization code</span>
@@ -11900,7 +11900,7 @@ div#notebook {
 <p><strong>回答：</strong></p>
 <p>在模拟过程中，智能出租车移动了</p>
 <p>驾驶代理程序获得的奖励是2.92</p>
-<p>智能车的action一直都是None，当红灯时，智能车会受到奖励；当绿灯直行时，智能车会受到惩罚</p>
+<p>Agent properly idled at a red light会获得奖励，但如果是连续的红灯，会受到惩罚；Agent idled at a green light with no oncoming traffic会受到惩罚，但是Agent idled at a green light with oncoming traffic会受到奖励</p>
 
 </div>
 </div>
@@ -13119,7 +13119,7 @@ quT/A24Ah/QTx3cWAAAAAElFTkSuQmCC
 <p><strong>回答：</strong></p>
 <p>'waypoint'对学习的效率相关性比较高，因为这个特征描述的是智能车要到达目的地应该行驶的方向，这个特征值会影响智能车行驶方向的选择，从而影响小车能够准时的到达目的地",</p>
 <p>'inputs'对学习安全性的相关性最高，因为这些特征描述了需要学习的环境中的交通情况，比如交通灯是red or green，左侧车辆的是forward, left or right，右侧车辆是forward, left or right，以及交叉方向的车辆目的方向，根据这些交通情况的描述来选择最安全的ation</p>
-<p>'deadline'其实是一种不稳定的特征，比如：在某个状态，选择action A，'deadline'比较大，但是不堵车，可以在规定的时间内到达目的地；如果选择action B，'deadline'是比较小，但是会堵车，没有办法在规定的时间内到达目的地。但是在另外一个状态，选择action A，'deadline'比较大，但是不堵车，可以在规定的时间内无法到达目的地；如果选择action B，'deadline'是比较小，但是会堵车，但也是可以在规定的时间内到达目的地的。所以这个特征不具有一般性，会影响智能车的训练的准确性。同时deadline会使状态空间变得很大，这个取决于智能车的起始位置，最坏的情况是智能车的起始位置选择在距离目的地最远的地方。</p>
+<p>'deadline'其实是一种不稳定的特征，比如：在某个状态，选择action A，'deadline'比较大，但是不堵车，可以在规定的时间内到达目的地；如果选择action B，'deadline'是比较小，但是会堵车，没有办法在规定的时间内到达目的地。但是在另外一个状态，选择action A，'deadline'比较大，但是不堵车，可以在规定的时间内无法到达目的地；如果选择action B，'deadline'是比较小，但是会堵车，但也是可以在规定的时间内到达目的地的。所以这个特征不具有一般性，会影响智能车的训练的准确性。同时deadline会使状态空间变得很大，增加训练次数，结果不容易达到收敛，这个取决于智能车的起始位置，最坏的情况是智能车的起始位置选择在距离目的地最远的地方。</p>
 
 </div>
 </div>
@@ -17274,6 +17274,19 @@ RERERERDUmBFREREREQ0JAVWREREREREQ/4LFGf8tsBGVD8AAAAASUVORK5CYII=
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span> 
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
@@ -17302,6 +17315,7 @@ RERERERDUmBFREREREQ0JAVWREREREREQ/4LFGf8tsBGVD8AAAAASUVORK5CYII=
 <p>与之前的默认Q-Learning学习器相比，这个Q-Learning学习器在经过1500多次的训练之后，Frequency of Bad Action降到了10%左右，safety rate达到了A+；Rate of Reliability基本达到了100%，Reliability Rating达到了A</p>
 <p>我认为Q-Learning学习器的结果表明了你的驾驶代理程序成功地学习了一个合适的策略</p>
 <p>满意</p>
+<p>epsilon的初始值是1.0，探索因子epsilon是用来决定小车的动作的选择是随机选择还是根据Q-table选择奖励最大的动作。在choose_action方法中，每次生成一个随机数，如果随机数小于epsilon，则随机选择；如果随机数大于epsilon，则根据Q-table选择奖励最大的动作。</p>
 
 </div>
 </div>
@@ -17328,8 +17342,9 @@ RERERERDUmBFREREREQ0JAVWREREREREQ/4LFGf8tsBGVD8AAAAASUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>回答：</strong> 
-(waypoint, inputs['light'], inputs['oncoming'], inputs['left'], inputs['right'])
+<p><strong>回答：</strong></p>
+<p>由于未来奖励在这个Q-Learning算法中无效应，所以在本项目中最优策略是指在某个状态下，选择奖励最大的动作a</p>
+<p>(waypoint, inputs['light'], inputs['oncoming'], inputs['left'], inputs['right'])
 最优策略例子：</p>
 <p>当waypoint=forward,light=green,oncoming=right,left=none,right=right时，最优策略的action=forward</p>
 <p>当waypoint=right,light=green,oncoming=forward,left=forward,right=none时，最优策略的action=right</p>
